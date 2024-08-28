@@ -14,6 +14,13 @@ app.use(express.json());
 app.use("/users", userController);
 app.use("/favorite", favoriteController);
 app.use("/users-favorites", usersFavoritesController)
+const pool = new Pool({
+  user: DB_USER,
+  host: "localhost",
+  database: "maps_places",
+  password: DB_PASSWORD,
+  port: 5432,
+});
 
 // Route
 app.get("/", (req, res) => {
