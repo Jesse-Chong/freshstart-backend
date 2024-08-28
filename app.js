@@ -18,7 +18,7 @@ app.use(express.json());
 app.use("/users", userController);
 app.use("/favorite", favoriteController);
 app.use("/users-favorites", usersFavoritesController)
-
+// This is used to get dev branch connected to github
 const pool = new Pool({
   user: DB_USER,
   host: "localhost",
