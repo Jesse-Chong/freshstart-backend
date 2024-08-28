@@ -1,5 +1,6 @@
 {
     "conventionalCommits.scopes": [
-        "foursquare-search"
+        "foursquare-search",
+        "foursquare-placeDetails"
     ]
 }
