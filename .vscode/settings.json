@@ -1,6 +1,7 @@
 {
     "conventionalCommits.scopes": [
         "foursquare-search",
-        "foursquare-placeDetails"
+        "foursquare-placeDetails",
+        "hereApi-routing"
     ]
 }

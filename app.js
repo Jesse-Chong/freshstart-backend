@@ -98,4 +98,46 @@ app.get("/place-details", async (req, res) => {
   }
 });
 
+// Route user
+app.get('/route', async (req, res) => {
+  const { origin, destination, transportMode, return: returnParam } = req.query;
+  const apiKey = process.env.HERE_API_KEY;
+
+  let url;
+  let params;
+
+  if (transportMode === 'publicTransport') {
+    url = `https://transit.router.hereapi.com/v8/routes`;
+    params = {
+      apiKey,
+      origin,
+      destination,
+      return: returnParam || "polyline,actions,fares"
+    };
+  } else {
+    url = `https://router.hereapi.com/v8/routes`;
+    params = {
+      apiKey,
+      origin,
+      destination,
+      transportMode,
+      routingMode: 'fast',
+      'avoid[features]': 'ferry',
+      return: returnParam || "polyline,actions,instructions"
+    };
+  }
+  try {
+    const response = await axios.get(url, { params });
+    const route = response.data.routes[0];
+
+    if (route && route.sections && route.sections.length > 0) {
+      return res.json(response.data);
+    } else {
+      res.status(404).json({ message: 'No valid route found.' });
+    }
+  } catch (error) {
+    console.error('Error:', error.response ? error.response.data : error.message);
+    res.status(500).json({ error: 'An error occurred while fetching the route.' });
+  }
+});
 module.exports = app;
